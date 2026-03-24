@@ -1,0 +1,86 @@
+<!--pages/login/login.wxml - 登录页面模板-->
+<view class="login-container">
+  <!-- 顶部Logo和标题 -->
+  <view class="header">
+    <image class="logo" src="/assets/images/logo.png" mode="aspectFit" />
+    <text class="app-name">心理健康测评系统</text>
+    <text class="app-slogan">关注心理健康，守护美好青春</text>
+  </view>
+
+  <!-- 登录方式切换 -->
+  <view class="mode-tabs">
+    <view
+      class="tab-item {{loginMode === 'wechat' ? 'active' : ''}}"
+      data-mode="wechat"
+      bindtap="switchLoginMode"
+    >
+      微信登录
+    </view>
+    <view
+      class="tab-item {{loginMode === 'account' ? 'active' : ''}}"
+      data-mode="account"
+      bindtap="switchLoginMode"
+    >
+      账号登录
+    </view>
+  </view>
+
+  <!-- 微信登录区域 -->
+  <block wx:if="{{loginMode === 'wechat'}}">
+    <view class="wechat-login-area">
+      <image class="wechat-icon" src="/assets/images/wechat.png" mode="aspectFit" />
+      <text class="tips">使用微信账号一键登录</text>
+      <button
+        class="btn-primary wechat-btn"
+        bindtap="onWechatLogin"
+        loading="{{loading}}"
+        disabled="{{loading}}"
+      >
+        微信一键登录
+      </button>
+    </view>
+  </block>
+
+  <!-- 账号密码登录区域 -->
+  <block wx:if="{{loginMode === 'account'}}">
+    <view class="form-area">
+      <view class="form-item">
+        <text class="label">用户名</text>
+        <input
+          class="input"
+          placeholder="请输入用户名/学号"
+          value="{{username}}"
+          bindinput="onUsernameInput"
+          confirm-type="next"
+        />
+      </view>
+      <view class="form-item">
+        <text class="label">密码</text>
+        <input
+          class="input"
+          placeholder="请输入密码"
+          password
+          value="{{password}}"
+          bindinput="onPasswordInput"
+          confirm-type="done"
+          bindconfirm="onAccountLogin"
+        />
+      </view>
+      <button
+        class="btn-primary login-btn"
+        bindtap="onAccountLogin"
+        loading="{{loading}}"
+        disabled="{{loading}}"
+      >
+        登录
+      </button>
+    </view>
+  </block>
+
+  <!-- 隐私说明 -->
+  <view class="privacy-notice">
+    <text>登录即代表您同意</text>
+    <text class="link">《隐私政策》</text>
+    <text>，您的测评数据仅供学校心理健康服务使用</text>
+  </view>
+</view>

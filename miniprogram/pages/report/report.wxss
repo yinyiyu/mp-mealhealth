@@ -1,0 +1,274 @@
+/* pages/report/report.wxss - 报告页面样式 */
+
+.page-container {
+  min-height: 100vh;
+  background: #F5F7FA;
+  padding-bottom: 40rpx;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #4A90D9, #5BA8E8);
+  padding: 48rpx 40rpx 60rpx;
+  color: #FFFFFF;
+}
+
+.page-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 26rpx;
+  opacity: 0.85;
+}
+
+/* 报告卡片（列表） */
+.report-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 20rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.risk-stripe {
+  width: 10rpx;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+.stripe-normal { background: #52C41A; }
+.stripe-low { background: #1890FF; }
+.stripe-medium { background: #FA8C16; }
+.stripe-high { background: #F5222D; }
+
+.card-body {
+  flex: 1;
+  padding: 28rpx 24rpx;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.report-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  flex: 1;
+}
+
+.report-date {
+  font-size: 22rpx;
+  color: #AAAAAA;
+  margin-left: 8rpx;
+}
+
+.card-scores {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.score-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6rpx;
+}
+
+.score-value {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #4A90D9;
+}
+
+.score-label {
+  font-size: 22rpx;
+  color: #888888;
+}
+
+.risk-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+}
+.normal { background: #F6FFED; color: #52C41A; }
+.low_risk { background: #E6F7FF; color: #1890FF; }
+.medium_risk { background: #FFF7E6; color: #FA8C16; }
+.high_risk { background: #FFF1F0; color: #F5222D; }
+
+.arrow {
+  font-size: 40rpx;
+  color: #CCCCCC;
+  padding-right: 24rpx;
+}
+
+/* 报告详情 */
+.detail-container {
+  min-height: 100vh;
+  background: #F5F7FA;
+  padding-bottom: 40rpx;
+}
+
+/* 报告头部（得分展示） */
+.report-header {
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.report-header.normal { background: linear-gradient(135deg, #52C41A, #73D13D); }
+.report-header.low_risk { background: linear-gradient(135deg, #1890FF, #40A9FF); }
+.report-header.medium_risk { background: linear-gradient(135deg, #FA8C16, #FFA940); }
+.report-header.high_risk { background: linear-gradient(135deg, #F5222D, #FF4D4F); }
+
+.score-circle {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+  color: #FFFFFF;
+}
+
+.big-score {
+  font-size: 96rpx;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.score-unit {
+  font-size: 36rpx;
+}
+
+.risk-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.risk-icon {
+  font-size: 40rpx;
+}
+
+.risk-text {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.report-time {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 详情卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 36rpx 32rpx;
+  margin: 20rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 24rpx;
+}
+
+.interpretation-text {
+  font-size: 28rpx;
+  color: #555555;
+  line-height: 1.8;
+}
+
+/* 维度得分 */
+.dimension-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.dimension-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.dim-name {
+  width: 180rpx;
+  font-size: 26rpx;
+  color: #555555;
+  flex-shrink: 0;
+}
+
+.dim-bar-container {
+  flex: 1;
+  height: 16rpx;
+  background: #EEEEEE;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.dim-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4A90D9, #52C41A);
+  border-radius: 8rpx;
+  min-width: 4rpx;
+}
+
+.dim-score {
+  width: 80rpx;
+  text-align: right;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #4A90D9;
+}
+
+/* 提示卡片 */
+.notice-card {
+  border-left: 6rpx solid #1890FF;
+}
+
+.notice-card.notice-urgent {
+  border-left-color: #F5222D;
+  background: #FFF1F0;
+}
+
+.notice-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.8;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+  gap: 16rpx;
+  color: #AAAAAA;
+  font-size: 30rpx;
+}
+
+.empty-sub {
+  font-size: 24rpx;
+}
+
+/* 列表底部 */
+.load-end {
+  text-align: center;
+  font-size: 24rpx;
+  color: #CCCCCC;
+  padding: 32rpx 0;
+}

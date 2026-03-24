@@ -1,0 +1,128 @@
+<!--pages/report/report.wxml - 测评报告页面-->
+
+<!-- 报告列表模式 -->
+<view wx:if="{{mode === 'list'}}" class="page-container">
+  <view class="page-header">
+    <text class="page-title">我的测评报告</text>
+    <text class="page-subtitle">查看历次测评结果</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading && reports.length === 0}}" class="loading-container">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:elif="{{reports.length === 0}}" class="empty-state">
+    <text>📋</text>
+    <text>暂无测评记录</text>
+    <text class="empty-sub">完成测评后可在此查看报告</text>
+  </view>
+
+  <!-- 报告卡片列表 -->
+  <view wx:else>
+    <view
+      wx:for="{{reports}}"
+      wx:key="id"
+      class="report-card"
+      bindtap="onReportTap"
+      data-id="{{item.id}}"
+    >
+      <!-- 风险等级颜色条 -->
+      <view class="risk-stripe {{item.risk_level === 'high_risk' ? 'stripe-high' :
+        item.risk_level === 'medium_risk' ? 'stripe-medium' :
+        item.risk_level === 'low_risk' ? 'stripe-low' : 'stripe-normal'}}">
+      </view>
+
+      <view class="card-body">
+        <view class="card-top">
+          <text class="report-title">{{item.assessment_title || '心理测评报告'}}</text>
+          <text class="report-date">{{item.created_at}}</text>
+        </view>
+        <view class="card-scores">
+          <view class="score-item">
+            <text class="score-value">{{item.total_score}}</text>
+            <text class="score-label">总分</text>
+          </view>
+          <view class="risk-badge {{item.risk_level}}">
+            <text>{{item.risk_level === 'normal' ? '正常' :
+              item.risk_level === 'low_risk' ? '低风险' :
+              item.risk_level === 'medium_risk' ? '中风险' : '高风险'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <text class="arrow">›</text>
+    </view>
+
+    <view wx:if="{{!hasMore}}" class="load-end">已加载全部报告</view>
+  </view>
+</view>
+
+<!-- 报告详情模式 -->
+<view wx:elif="{{mode === 'detail'}}" class="detail-container">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text>生成报告中...</text>
+  </view>
+
+  <block wx:elif="{{report}}">
+    <!-- 报告头部：评分展示 -->
+    <view class="report-header {{report.risk_level}}">
+      <view class="score-circle">
+        <text class="big-score">{{report.total_score}}</text>
+        <text class="score-unit">分</text>
+      </view>
+      <view class="risk-info">
+        <text class="risk-icon">
+          {{report.risk_level === 'normal' ? '😊' :
+            report.risk_level === 'low_risk' ? '🟡' :
+            report.risk_level === 'medium_risk' ? '🟠' : '🔴'}}
+        </text>
+        <text class="risk-text">
+          {{report.risk_level === 'normal' ? '心理状态正常' :
+            report.risk_level === 'low_risk' ? '低风险' :
+            report.risk_level === 'medium_risk' ? '中风险，需关注' : '高风险，请寻求帮助'}}
+        </text>
+      </view>
+      <text class="report-time">{{report.created_at}}</text>
+    </view>
+
+    <!-- 综合解读 -->
+    <view class="card report-card-detail">
+      <view class="section-title">📝 综合解读</view>
+      <text class="interpretation-text">{{report.interpretation.overall}}</text>
+    </view>
+
+    <!-- 各维度得分（如果有） -->
+    <view class="card" wx:if="{{report.dimension_scores}}">
+      <view class="section-title">📊 各维度得分</view>
+      <view class="dimension-list">
+        <view
+          wx:for="{{report.dimension_scores}}"
+          wx:key="*this"
+          wx:for-key="key"
+          class="dimension-item"
+        >
+          <text class="dim-name">{{key}}</text>
+          <view class="dim-bar-container">
+            <view class="dim-bar" style="width: {{item / 30 * 100}}%"></view>
+          </view>
+          <text class="dim-score">{{item}}分</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 温馨提示 -->
+    <view class="card notice-card {{report.risk_level === 'high_risk' ? 'notice-urgent' : ''}}">
+      <view class="section-title">
+        {{report.risk_level === 'high_risk' ? '⚠️ 重要提示' : '💡 温馨提示'}}
+      </view>
+      <text class="notice-text">
+        {{report.risk_level === 'high_risk' ?
+          '您的测评结果显示存在较高心理健康风险，我们会有专业心理老师联系您。请保持手机畅通，积极配合跟进。如有紧急情况，请拨打学校心理援助热线。' :
+          '定期参加心理健康测评有助于了解自身心理状态。如有需要，可预约学校心理咨询中心进行专业咨询。'}}
+      </text>
+    </view>
+  </block>
+</view>
