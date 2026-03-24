@@ -1,0 +1,67 @@
+<!--pages/profile/profile.wxml-->
+<view class="page-container">
+  <!-- 头像区域 -->
+  <view class="avatar-section">
+    <view class="avatar">
+      <text class="avatar-text">{{userInfo.name ? userInfo.name[0] : '?'}}</text>
+    </view>
+    <text class="username">{{userInfo.name || '未设置姓名'}}</text>
+    <text class="role-tag">{{userInfo.role === 'student' ? '学生' : userInfo.role === 'teacher' ? '心理老师' : '管理员'}}</text>
+  </view>
+
+  <!-- 信息卡片 -->
+  <view class="card info-card">
+    <view class="card-header-row">
+      <text class="section-title">个人信息</text>
+      <text class="edit-btn" bindtap="onEditToggle">{{editing ? '取消' : '编辑'}}</text>
+    </view>
+
+    <view wx:if="{{!editing}}">
+      <view class="info-row">
+        <text class="info-label">学号</text>
+        <text class="info-value">{{userInfo.student_id || '未填写'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">院系</text>
+        <text class="info-value">{{userInfo.department || '未填写'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">年级</text>
+        <text class="info-value">{{userInfo.grade || '未填写'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">手机</text>
+        <text class="info-value">{{userInfo.phone || '未填写'}}</text>
+      </view>
+    </view>
+
+    <view wx:else>
+      <view class="form-row">
+        <text class="form-label">姓名 *</text>
+        <input class="form-input" value="{{form.name}}" placeholder="请输入真实姓名" data-field="name" bindinput="onInput" />
+      </view>
+      <view class="form-row">
+        <text class="form-label">学号</text>
+        <input class="form-input" value="{{form.student_id}}" placeholder="请输入学号" data-field="student_id" bindinput="onInput" />
+      </view>
+      <view class="form-row">
+        <text class="form-label">院系</text>
+        <input class="form-input" value="{{form.department}}" placeholder="如：计算机学院" data-field="department" bindinput="onInput" />
+      </view>
+      <view class="form-row">
+        <text class="form-label">年级</text>
+        <input class="form-input" value="{{form.grade}}" placeholder="如：2022" data-field="grade" bindinput="onInput" />
+      </view>
+      <view class="form-row">
+        <text class="form-label">手机</text>
+        <input class="form-input" value="{{form.phone}}" placeholder="请输入手机号" data-field="phone" bindinput="onInput" type="number" />
+      </view>
+      <button class="btn-primary save-btn" bindtap="onSave" loading="{{loading}}">保存</button>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-btn" bindtap="onLogout">
+    <text>退出登录</text>
+  </view>
+</view>

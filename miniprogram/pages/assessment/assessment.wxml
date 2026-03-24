@@ -1,0 +1,80 @@
+<!--pages/assessment/assessment.wxml - 测评列表页面模板-->
+<view class="page-container">
+  <!-- 顶部欢迎区域 -->
+  <view class="welcome-banner">
+    <view class="welcome-text">
+      <text class="greeting">你好，{{userInfo.name || '同学'}} 👋</text>
+      <text class="subtitle">完成心理健康测评，了解自己的心理状态</text>
+    </view>
+  </view>
+
+  <!-- 测评列表 -->
+  <view class="list-section">
+    <view class="section-title">待完成的测评</view>
+
+    <!-- 加载中 -->
+    <view wx:if="{{loading && assessments.length === 0}}" class="loading-container">
+      <view class="loading-dots">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:elif="{{assessments.length === 0}}" class="empty-state">
+      <image src="/assets/images/empty.png" class="empty-img" />
+      <text>暂无进行中的测评</text>
+      <text class="empty-sub">请关注通知，等待老师发布新测评</text>
+    </view>
+
+    <!-- 测评卡片列表 -->
+    <view wx:else>
+      <view
+        wx:for="{{assessments}}"
+        wx:key="id"
+        class="assessment-card {{completedIds.includes(item.id) ? 'completed' : ''}}"
+        bindtap="onAssessmentTap"
+        data-item="{{item}}"
+      >
+        <!-- 完成状态角标 -->
+        <view wx:if="{{completedIds.includes(item.id)}}" class="completed-badge">
+          <text>✓ 已完成</text>
+        </view>
+
+        <!-- 卡片内容 -->
+        <view class="card-header">
+          <text class="card-title">{{item.title}}</text>
+          <view class="status-tag {{item.status === 'ongoing' ? 'status-ongoing' : 'status-ended'}}">
+            {{item.status === 'ongoing' ? '进行中' : '已结束'}}
+          </view>
+        </view>
+
+        <view class="card-meta">
+          <view class="meta-item">
+            <text class="meta-icon">📋</text>
+            <text>{{item.template_title}}</text>
+          </view>
+          <view class="meta-item" wx:if="{{item.end_time}}">
+            <text class="meta-icon">⏰</text>
+            <text>截止：{{item.end_time}}</text>
+          </view>
+          <view class="meta-item" wx:if="{{item.max_duration_minutes}}">
+            <text class="meta-icon">⌛</text>
+            <text>限时 {{item.max_duration_minutes}} 分钟</text>
+          </view>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="card-action">
+          <text wx:if="{{completedIds.includes(item.id)}}" class="action-btn view-btn">查看报告</text>
+          <text wx:else class="action-btn start-btn">开始测评 →</text>
+        </view>
+      </view>
+
+      <!-- 加载更多 -->
+      <view wx:if="{{loading}}" class="load-more-tip">加载中...</view>
+      <view wx:elif="{{!hasMore && assessments.length > 0}}" class="load-more-tip">已加载全部</view>
+    </view>
+  </view>
+</view>
